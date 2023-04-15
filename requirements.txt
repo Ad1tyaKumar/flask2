@@ -1,7 +1,13 @@
-click==7.1.2
-Flask==1.1.2
 gunicorn==20.0.4
 itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
 Werkzeug==1.0.1
+Flask==1.1.4
+Flask_Cors==3.0.10
+gnews==0.2.7
+newspaper3k==0.2.8
+nltk==3.8.1
+Requests==2.26.0
+textblob==0.17.1
+
