@@ -216,7 +216,41 @@ def local():
       except:
         continue
     return jsonify(json)
+@app.route('/fast_api/<text>',methods=['GET','POST'])
+def fast_api(text):
+    '''
+    For direct API calls trought request
+    '''
+    try:
+        all_articles = newscatcherapi.get_search(q=text,
+                                         lang='en',
+                                         countries='US',
+                                         page_size=10)
 
+        json = []
+        count = 0
+        for i in range(len(all_articles["articles"])):
+            summary = all_articles["articles"][i]["summary"]
+            blob = TextBlob(summary)
+            # output = query({"inputs": summary })
+            # Textlabel = label(output)
+            senti = "Positive" if blob.polarity > 0 else "negative" if blob.polarity < 0 else "neutral"
+            count+=1
+            d = {}
+            d["Headline"] = all_articles["articles"][i]["title"]
+            d["Url"] = all_articles["articles"][i]["link"]
+            # d["Article"] = text
+            d["summary"] = all_articles["articles"][i]["summary"]
+            d["Sentiment"] = senti
+            d["images"] = all_articles["articles"][i]["media"]
+            d["Publish date"] =  all_articles["articles"][i]["published_date"]
+            # d["Keywords"] = article.keywords
+            d["TextClassification"] = "Sports"
+            d["id"] = all_articles["articles"][i]["_id"]
+            json.append(d)
+    except:
+        json = {"error":"hello"}
+    return jsonify(json)
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
