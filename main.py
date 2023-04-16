@@ -22,8 +22,8 @@ CORS(app)
 google_news = GNews()
 
 
-API_URL = "https://api-inference.huggingface.co/models/Amite5h/TextClassificationmulticlass"
-headers = {"Authorization": "Bearer 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"}
+# API_URL = "https://api-inference.huggingface.co/models/Amite5h/TextClassificationmulticlass"
+# headers = {"Authorization": "Bearer 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"}
 
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
@@ -67,8 +67,8 @@ def search(text):
         text = article.text
         summary = article.summary
         blob = TextBlob(summary)
-        output = query({"inputs": summary })
-        Textlabel = label(output)
+#         output = query({"inputs": summary })
+#         Textlabel = label(output)
         senti = "Positive" if blob.polarity > 0 else "negative" if blob.polarity < 0 else "neutral"
         count+=1
         d = {}
@@ -80,7 +80,7 @@ def search(text):
         d["images"] = article.top_image
         d["Publish date"] = article.publish_date
         d["Keywords"] = article.keywords
-        d["TextClassification"] = Textlabel
+        d["TextClassification"] = "Sports"
         d["id"] = count
         json.append(d)
       except:
